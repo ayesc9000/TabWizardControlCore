@@ -34,6 +34,7 @@
             IntroPage = new System.Windows.Forms.TabPage();
             IntroLabel = new System.Windows.Forms.Label();
             FooPage = new System.Windows.Forms.TabPage();
+            NavigationLabel = new System.Windows.Forms.Label();
             BazRadioButton = new System.Windows.Forms.RadioButton();
             BarRadioButton = new System.Windows.Forms.RadioButton();
             FooLabel = new System.Windows.Forms.Label();
@@ -87,11 +88,11 @@
             Wizard.Controls.Add(BazPage);
             Wizard.Controls.Add(EndPage);
             Wizard.Dock = System.Windows.Forms.DockStyle.Fill;
+            Wizard.LastPageButtonText = "Close";
             Wizard.Location = new System.Drawing.Point(0, 0);
             Wizard.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Wizard.Name = "Wizard";
             Wizard.NextButton = NextButton;
-            Wizard.LastPageButtonText = "Close";
             Wizard.PreviousButton = PreviousButton;
             Wizard.SelectedIndex = 0;
             Wizard.Size = new System.Drawing.Size(712, 380);
@@ -125,6 +126,7 @@
             // 
             // FooPage
             // 
+            FooPage.Controls.Add(NavigationLabel);
             FooPage.Controls.Add(BazRadioButton);
             FooPage.Controls.Add(BarRadioButton);
             FooPage.Controls.Add(FooLabel);
@@ -132,10 +134,19 @@
             FooPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             FooPage.Name = "FooPage";
             FooPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            FooPage.Size = new System.Drawing.Size(704, 351);
+            FooPage.Size = new System.Drawing.Size(704, 352);
             FooPage.TabIndex = 0;
             FooPage.Text = "Foo Page";
             FooPage.UseVisualStyleBackColor = true;
+            // 
+            // NavigationLabel
+            // 
+            NavigationLabel.AutoSize = true;
+            NavigationLabel.Location = new System.Drawing.Point(20, 146);
+            NavigationLabel.Name = "NavigationLabel";
+            NavigationLabel.Size = new System.Drawing.Size(76, 15);
+            NavigationLabel.TabIndex = 4;
+            NavigationLabel.Text = "Default Value";
             // 
             // BazRadioButton
             // 
@@ -180,7 +191,7 @@
             BarPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             BarPage.Name = "BarPage";
             BarPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            BarPage.Size = new System.Drawing.Size(704, 351);
+            BarPage.Size = new System.Drawing.Size(704, 352);
             BarPage.TabIndex = 1;
             BarPage.Text = "Bar Page";
             BarPage.UseVisualStyleBackColor = true;
@@ -217,7 +228,7 @@
             BazPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             BazPage.Name = "BazPage";
             BazPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            BazPage.Size = new System.Drawing.Size(704, 351);
+            BazPage.Size = new System.Drawing.Size(704, 352);
             BazPage.TabIndex = 2;
             BazPage.Text = "Baz Page";
             BazPage.UseVisualStyleBackColor = true;
@@ -262,7 +273,7 @@
             EndPage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             EndPage.Name = "EndPage";
             EndPage.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            EndPage.Size = new System.Drawing.Size(704, 351);
+            EndPage.Size = new System.Drawing.Size(704, 352);
             EndPage.TabIndex = 4;
             EndPage.Text = "End";
             EndPage.UseVisualStyleBackColor = true;
@@ -338,6 +349,7 @@
         private System.Windows.Forms.ComboBox BazComboBox;
         private System.Windows.Forms.Label EndLabel;
         private System.Windows.Forms.Panel ButtonPanel;
+        private System.Windows.Forms.Label NavigationLabel;
     }
 }
 
