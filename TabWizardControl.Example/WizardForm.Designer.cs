@@ -1,6 +1,6 @@
 ﻿namespace TabWizardControl.Example
 {
-    partial class FormExample
+    partial class WizardForm
     {
         /// <summary>
         /// Required designer variable.

@@ -13,7 +13,7 @@ namespace TabWizardControl.Example
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormExample());
+            Application.Run(new WizardForm());
         }
     }
 }
