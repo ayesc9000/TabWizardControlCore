@@ -10,7 +10,7 @@
   </PropertyGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\Piksel.Controls.TabWizard\Piksel.Controls.TabWizard.csproj" />
+    <ProjectReference Include="..\Piksel.Controls.TabWizard\TabWizardControl.csproj" />
   </ItemGroup>
 	
 </Project>
