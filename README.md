@@ -1,7 +1,7 @@
 # TabWizardControl Core
 
 A simple wizard control for Windows Forms, built off of a TabControl. This is a .NET 8+ port of the
-original TabWizardControl made by Nils M�s�n for .NET Framework.
+original TabWizardControl made by Nils Måsén for .NET Framework.
 
 <p align="center">
     <a href="Screenshots/Designer.png">

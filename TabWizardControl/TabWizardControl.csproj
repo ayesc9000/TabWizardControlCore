@@ -11,8 +11,8 @@
 		<Title>TabWizardControl Core</Title>
 		<Version>1.1.0</Version>
 		<Authors>AyesC</Authors>
-		<Description>TabWizardControl Core is a port of the original TabWizardControl by nils måsén to .NET 8+ with additional fixes and tweaks.</Description>
-		<Copyright>Copyright 2017 nils måsén, Copyright 2025 Liam Hogan</Copyright>
+		<Description>A simple wizard control based on the Windows Forms TabControl. Originally written by Nils Måsén, TabWizardControl Core updates it to .NET 8+ with additional fixes and tweaks.</Description>
+		<Copyright>Copyright 2017 Nils Måsén, Copyright 2025 Liam Hogan</Copyright>
 		<PackageReadmeFile>README-NuGet.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/ayesc9000/TabWizardControlCore</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
