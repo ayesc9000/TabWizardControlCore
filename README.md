@@ -4,7 +4,7 @@ A simple wizard control for Windows Forms, built off of a TabControl. This is a 
 original TabWizardControl made by Nils Måsén for .NET Framework.
 
 <p align="center">
-    <a href="Screenshots/Program.png">
+    <a href="Screenshots/Designer.png">
         <img alt="Designer Preview" src="Screenshots/Designer.png" width="49%">
     </a>
     <a href="Screenshots/Program.png">
