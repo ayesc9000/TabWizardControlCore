@@ -9,21 +9,21 @@ namespace TabWizardControlExample
         {
             InitializeComponent();
 
-            wizard.NextFunction(tpFoo, () => rbBar.Checked ? tpBar : rbBaz.Checked ? tpBaz : null);
-            wizard.PreviousFunction(tpBaz, tpFoo);
-            wizard.NextFunction(tpBaz, () => comboBox1.SelectedIndex >= 0);
-            wizard.NextFunction(tpBar, () => checkBox2.Checked ? tpEnd : null);
-            wizard.PreviousFunction(tpEnd, () => rbBar.Checked ? tpBar : rbBaz.Checked ? tpBaz : tpFoo);
+            Wizard.NextFunction(FooPage, () => BarRadioButton.Checked ? BarPage : BazRadioButton.Checked ? BazPage : null);
+            Wizard.PreviousFunction(BazPage, FooPage);
+            Wizard.NextFunction(BazPage, () => BazComboBox.SelectedIndex >= 0);
+            Wizard.NextFunction(BarPage, () => BarCheckBox.Checked ? EndPage : null);
+            Wizard.PreviousFunction(EndPage, () => BarRadioButton.Checked ? BarPage : BazRadioButton.Checked ? BazPage : FooPage);
         }
 
         private void StateControlChanged(object sender, EventArgs e)
         {
-            wizard.UpdateState();
+            Wizard.UpdateState();
         }
 
         private void WizardPageChanged(object sender, EventArgs e)
         {
-            Text = "TabWizardControl Example - " + wizard.Text;
+            Text = "TabWizardControl Example - " + Wizard.Text;
         }
 
         private void WizardLastButtonClicked(object sender, EventArgs e)
