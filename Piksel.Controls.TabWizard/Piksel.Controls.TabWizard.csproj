@@ -5,7 +5,8 @@
     <OutputType>Library</OutputType>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<Nullable>true</Nullable>
+		<ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 	
   <ItemGroup>
