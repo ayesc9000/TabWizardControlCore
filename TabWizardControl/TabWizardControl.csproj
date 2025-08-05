@@ -13,7 +13,7 @@
 		<Authors>AyesC</Authors>
 		<Description>TabWizardControl Core is a port of the original TabWizardControl by nils måsén to .NET 8+ with additional fixes and tweaks.</Description>
 		<Copyright>Copyright 2017 nils måsén, Copyright 2025 Liam Hogan</Copyright>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>README-NuGet.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/ayesc9000/TabWizardControlCore</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>WinForms;Control;Wizard</PackageTags>
@@ -28,7 +28,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\README.md">
+    <None Include="..\README-NuGet.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
