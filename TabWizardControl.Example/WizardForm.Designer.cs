@@ -299,7 +299,7 @@
             ButtonPanel.Size = new System.Drawing.Size(712, 68);
             ButtonPanel.TabIndex = 4;
             // 
-            // FormExample
+            // WizardForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -310,7 +310,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             MinimumSize = new System.Drawing.Size(494, 487);
-            Name = "FormExample";
+            Name = "WizardForm";
             Text = "TabWizardControl Example";
             Wizard.ResumeLayout(false);
             IntroPage.ResumeLayout(false);
