@@ -88,7 +88,7 @@ namespace TabWizardControl
         /// specific tab page.
         /// </summary>
         /// <param name="current">The tab page to associate the previous page with.</param>
-        /// <param name="next">
+        /// <param name="previous">
         /// The page to navigate to when previous is clicked on the associated page.
         /// </param>
         public void PreviousFunction(TabPage current, TabPage previous)
@@ -144,6 +144,10 @@ namespace TabWizardControl
             Text = SelectedTab!.Text;
         }
 
+        /// <summary>
+        /// Process messages sent to this control from the OS.
+        /// </summary>
+        /// <param name="m">The message being sent to the control.</param>
         protected override void WndProc(ref Message m)
         {
             // Hide tabs by trapping the TCM_ADJUSTRECT message
