@@ -1,21 +1,49 @@
-# TabWizardControl
+# TabWizardControl Core
 
-Simple wizard control for .NET WinForms that extends a TabControl for this purpose.
+A simple wizard control for Windows Forms, built off of a TabControl. This is a .NET 8+ port of the
+original TabWizardControl made by Nils Måsén for .NET Framework.
 
-Design-time:  
-![](https://i.imgur.com/FL02jmO.png)
+<p align="center">
+    <a href="Screenshots/Program.png">
+        <img alt="Designer Preview" src="Screenshots/Designer.png" width="49%">
+    </a>
+    <a href="Screenshots/Program.png">
+        <img alt="Runtime Program" src="Screenshots/Program.png" width="49%">
+    </a>
+</p>
+<p align="center">
+    <span style="display: inline-block; width: 49%;">Preview in designer</span>
+    <span style="display: inline-block; width: 49%;">Control at runtime</span>
+</p>
 
-Runtime:  
-![](https://i.imgur.com/7vcYv4W.png)
+## Usage
 
-Behaviour controlled by lambdas:  
-```.cs
-    // Move to Bar if checked, move to Baz if checked, otherwise disable Next button
-    wizard.NextFunction(tpFoo, () => rbBar.Checked ? tpBar : rbBaz.Checked ? tpBaz : null);
+Install the NuGet package in your project to get started. Add the TabWizardControl from the toolbox
+to your form and add two buttons for next and previous (buttons are optional). In the properties of
+the TabControlWizard, set NextButton and PreviousButton to the buttons you just added.
 
-    // Link Previous button for Baz panel to Foo (skipping Bar)
-    wizard.PreviousFunction(tpBaz, tpFoo);
+By default, the wizard will navigate through the tabs in sequential order. To customize the order
+or behaviour of the wizard, you can define a custom order of TabPages or use functions and lambda
+expressions to define custom behaviour.
+
+An example of custom behaviour implemented using lambda expressions:
+
+```csharp
+// Check the state of radio buttons to determine the next page, otherwise return null to disable
+// the next button.
+wizard.NextFunction(Page1, () => Button1.Checked ? Page2 : Button2.Checked ? Page3 : null);
+
+// Define a specific order to always follow.
+wizard.PreviousFunction(Page1, Page3);
     
-    // Enable the Next button for Baz if a value from the combobox has been selected
-    wizard.NextFunction(tpBaz, () => comboBox1.SelectedIndex >= 0);
+// Enable the Next button if an item in a combo box is chosen.
+wizard.NextFunction(Page1, () => ComboBox.SelectedIndex >= 0);
 ```
+
+A fully annotated example of defining custom behaviour is provided in the example project under
+TabWizardControl.Example.
+
+## Building
+
+Clone the repository to your local machine and build the solution as normal. All projects currently
+require .NET 8.
