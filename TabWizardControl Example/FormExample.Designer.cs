@@ -30,7 +30,7 @@
         {
             PreviousButton = new System.Windows.Forms.Button();
             NextButton = new System.Windows.Forms.Button();
-            Wizard = new Piksel.Controls.TabWizard.TabWizardControl();
+            Wizard = new TabWizardControl();
             IntroPage = new System.Windows.Forms.TabPage();
             IntroLabel = new System.Windows.Forms.Label();
             FooPage = new System.Windows.Forms.TabPage();
@@ -91,7 +91,7 @@
             Wizard.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             Wizard.Name = "Wizard";
             Wizard.NextButton = NextButton;
-            Wizard.NextButtonLastText = "Close";
+            Wizard.LastPageButtonText = "Close";
             Wizard.PreviousButton = PreviousButton;
             Wizard.SelectedIndex = 0;
             Wizard.Size = new System.Drawing.Size(712, 380);
@@ -319,7 +319,7 @@
 
         #endregion
 
-        private Piksel.Controls.TabWizard.TabWizardControl Wizard;
+        private TabWizardControl Wizard;
         private System.Windows.Forms.TabPage FooPage;
         private System.Windows.Forms.TabPage BarPage;
         private System.Windows.Forms.Button PreviousButton;
