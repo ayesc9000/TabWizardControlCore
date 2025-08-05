@@ -1,4 +1,4 @@
-﻿namespace TabWizardControl_Example
+﻿namespace TabWizardControlExample
 {
     partial class FormExample
     {
@@ -107,8 +107,8 @@
             this.wizard.Size = new System.Drawing.Size(609, 316);
             this.wizard.TabIndex = 0;
             this.wizard.Text = null;
-            this.wizard.PageChanged += new System.EventHandler(this.wizard_PageChanged);
-            this.wizard.LastButtonClicked += new System.EventHandler(this.wizard_LastButtonClicked);
+            this.wizard.PageChanged += new System.EventHandler(this.WizardPageChanged);
+            this.wizard.LastButtonClicked += new System.EventHandler(this.WizardLastButtonClicked);
             // 
             // tbIntro
             // 
