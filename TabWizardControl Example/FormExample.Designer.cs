@@ -1,4 +1,4 @@
-﻿namespace TabWizardControlExample
+﻿namespace TabWizardControl.Example
 {
     partial class FormExample
     {

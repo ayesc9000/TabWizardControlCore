@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TabWizardControlExample
+namespace TabWizardControl.Example
 {
     public partial class FormExample : Form
     {

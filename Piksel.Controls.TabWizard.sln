@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36401.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabWizardControl", "Piksel.Controls.TabWizard\TabWizardControl.csproj", "{D5C46338-FEE5-4F00-BBC7-2855A180A339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabWizardControl Example", "TabWizardControl Example\TabWizardControl Example.csproj", "{6468F9B9-51A5-4BB5-9024-2C1034C776F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabWizardControl.Example", "TabWizardControl Example\TabWizardControl.Example.csproj", "{6468F9B9-51A5-4BB5-9024-2C1034C776F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0774F5E8-3809-4D36-A882-803C26A65048}
 	EndGlobalSection
 EndGlobal
