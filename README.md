@@ -18,9 +18,10 @@ original TabWizardControl made by Nils Måsén for .NET Framework.
 
 ## Usage
 
-Install the NuGet package in your project to get started. Add the TabWizardControl from the toolbox
-to your form and add two buttons for next and previous. In the properties of the TabControlWizard,
-set NextButton and PreviousButton to the buttons you just added.
+Install the [NuGet package](https://www.nuget.org/packages/TabWizardControlCore) in your project to
+get started. Add the TabWizardControl from the toolbox to your form and add two buttons for next
+and previous. In the properties of the TabControlWizard, set NextButton and PreviousButton to the
+buttons you just added.
 
 By default, the wizard will navigate through the tabs in sequential order. To customize the order
 or behaviour of the wizard, you can define a custom order of TabPages or use functions and lambda
