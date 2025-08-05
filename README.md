@@ -1,7 +1,7 @@
 # TabWizardControl Core
 
 A simple wizard control for Windows Forms, built off of a TabControl. This is a .NET 8+ port of the
-original TabWizardControl made by Nils Måsén for .NET Framework.
+original TabWizardControl made by Nils Mï¿½sï¿½n for .NET Framework.
 
 <p align="center">
     <a href="Screenshots/Designer.png">
@@ -32,7 +32,7 @@ An example of custom behaviour implemented using lambda expressions:
 // Define a specific order to always follow.
 wizard.PreviousFunction(Page1, Page3);
     
-// Enable the Next button if an item in a combo box is chosen.
+// Enable the next button if an item in a combo box is chosen.
 wizard.NextFunction(Page1, () => ComboBox.SelectedIndex >= 0);
 
 // Check the state of radio buttons to determine the next page, otherwise return null to disable
