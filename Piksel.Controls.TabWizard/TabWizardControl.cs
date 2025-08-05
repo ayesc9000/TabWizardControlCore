@@ -1,130 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Piksel.Controls.TabWizard
+namespace TabWizardControl
 {
-    public class TabWizardControl: TabControl
+    public class TabWizardControl : TabControl
     {
-        [DefaultValue(true), Category("Design")]
-        public bool HideTabs { get; set; } = true;
-
-        [DefaultValue(false), Category("Design")]
-        public bool HideTabsInDesign { get; set; } = false;
-
-        public new TabAlignment Alignment { get; set; } = TabAlignment.Bottom;
-
-        public override string Text { get; set; }
-
-        public string NextButtonLastText { get; set; }
-
-        public event EventHandler PageChanged;
-        private void OnPageChanged() => PageChanged?.Invoke(this, new EventArgs());
-        
-        public event EventHandler LastButtonClicked;
-        private void OnLastButtonClicked() => LastButtonClicked?.Invoke(this, new EventArgs());
-
+        readonly Dictionary<TabPage, Func<TabPage?>> _nextPageActions = [];
+        readonly Dictionary<TabPage, Func<TabPage?>> _prevPageActions = [];
+        readonly Dictionary<TabPage, Action<bool>> _pageDisplay = [];
         string _nextButtonLabel = "Next";
+        Button? _nextButton;
+        Button? _prevButton;
 
-        Button _nextButton;
-
-        [Category("Buttons")]
-        public Button NextButton {
-            get
-            {
-                return _nextButton;
-            }
-            set
-            {
-                _nextButton = value;
-                _nextButtonLabel = _nextButton.Text;
-                _nextButton.Click += _nextButton_Click;
-            }
-        }
-
-
-        Button _prevButton;
-
-        [Category("Buttons")]
-        public Button PreviousButton {
-            get
-            {
-                return _prevButton;
-            }
-            set
-            {
-                _prevButton = value;
-                _prevButton.Enabled = false;
-                _prevButton.Click += _prevButton_Click;
-            }
-        }
-
-
-        private void _nextButton_Click(object sender, EventArgs e)
+        public void NextFunction(TabPage page, Func<TabPage?> func)
         {
-            if (SelectedIndex == TabPages.Count - 1)
-            {
-                OnLastButtonClicked();
-                return;
-            }
-
-            if (_nextPage.ContainsKey(SelectedTab))
-                SelectedTab = _nextPage[SelectedTab]();
-            else
-                SelectedIndex++;
-
-            if (_pageDisplay.ContainsKey(SelectedTab))
-                _pageDisplay[SelectedTab](false);
-
-            UpdateState();
-            OnPageChanged();
-
-
-        }
-
-        private void _prevButton_Click(object sender, EventArgs e)
-        {
-            if (_prevPage.ContainsKey(SelectedTab))
-                SelectedTab = _prevPage[SelectedTab]();
-            else if (SelectedIndex > 0)
-                SelectedIndex--;
-
-            if (_pageDisplay.ContainsKey(SelectedTab))
-                _pageDisplay[SelectedTab](true);
-
-            UpdateState();
-            OnPageChanged();
-
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            // Hide tabs by trapping the TCM_ADJUSTRECT message
-            if (m.Msg == 0x1328 &&
-                ((HideTabsInDesign && DesignMode) ||
-                (HideTabs && !DesignMode)))
-            {
-                m.Result = (IntPtr)1;
-            }
-            else
-            {
-                base.WndProc(ref m);
-            }
-        }
-
-        readonly Dictionary<TabPage, Func<TabPage>> _nextPage = new Dictionary<TabPage, Func<TabPage>>();
-        readonly Dictionary<TabPage, Func<TabPage>> _prevPage = new Dictionary<TabPage, Func<TabPage>>();
-
-        public void NextFunction(TabPage page, Func<TabPage> func)
-        {
-            if (_nextPage.ContainsKey(page))
-                _nextPage[page] = func;
-            else
-                _nextPage.Add(page, func);
+            if (!_nextPageActions.TryAdd(page, func))
+                _nextPageActions[page] = func;
         }
 
         public void NextFunction(TabPage page, Func<bool> func)
@@ -137,12 +30,10 @@ namespace Piksel.Controls.TabWizard
             NextFunction(current, () => next);
         }
 
-        public void PreviousFunction(TabPage page, Func<TabPage> func)
+        public void PreviousFunction(TabPage page, Func<TabPage?> func)
         {
-            if (_prevPage.ContainsKey(page))
-                _prevPage[page] = func;
-            else
-                _prevPage.Add(page, func);
+            if (!_prevPageActions.TryAdd(page, func))
+                _prevPageActions[page] = func;
         }
 
         public void PreviousFunction(TabPage page, Func<bool> func)
@@ -155,31 +46,156 @@ namespace Piksel.Controls.TabWizard
             PreviousFunction(current, () => previous);
         }
 
-        readonly Dictionary<TabPage, Action<bool>> _pageDisplay = new Dictionary<TabPage, Action<bool>>();
-
         public void PageDisplayed(TabPage page, Action<bool> func)
         {
-            if (_pageDisplay.ContainsKey(page))
+            if (!_pageDisplay.TryAdd(page, func))
                 _pageDisplay[page] = func;
-            else
-                _pageDisplay.Add(page, func);
         }
 
         public void UpdateState()
         {
+            // We might just want to simply return out here instead of selecting a new tab. Test
+            // deeper and determine what the best course of action here is.
+            if (SelectedTab == null)
+                SelectDefaultTab();
+
             if (NextButton != null)
             {
-                if (_nextPage.ContainsKey(SelectedTab))
-                {
-                    NextButton.Enabled = _nextPage[SelectedTab]() != null;
-                }
+                if (_nextPageActions.TryGetValue(SelectedTab!, out Func<TabPage?>? pageAction))
+                    NextButton.Enabled = pageAction() != null;
+                else
+                    NextButton.Enabled = true;
 
-                NextButton.Text = (SelectedIndex == TabCount - 1 && !string.IsNullOrEmpty(NextButtonLastText)) 
-                    ? NextButtonLastText : _nextButtonLabel;
+                NextButton.Text = (SelectedIndex == TabCount - 1 && !string.IsNullOrEmpty(LastPageButtonText))
+                    ? LastPageButtonText : _nextButtonLabel;
             }
+
             if (PreviousButton != null)
                 PreviousButton.Enabled = (SelectedIndex > 0);
-            Text = SelectedTab.Text;
+
+            Text = SelectedTab!.Text;
         }
+
+        protected override void WndProc(ref Message m)
+        {
+            // Hide tabs by trapping the TCM_ADJUSTRECT message
+            if (m.Msg == 0x1328
+                && ((HideTabsInDesigner && DesignMode)
+                || (HideTabs && !DesignMode)))
+                m.Result = 1;
+            else
+                base.WndProc(ref m);
+        }
+
+        private void NextButtonClicked(object? sender, EventArgs e)
+        {
+            // We might just want to simply return out here instead of selecting a new tab. Test
+            // deeper and determine what the best course of action here is.
+            if (SelectedTab == null)
+                SelectDefaultTab();
+
+            if (SelectedIndex == TabPages.Count - 1)
+            {
+                OnLastButtonClicked();
+                return;
+            }
+
+            if (_nextPageActions.TryGetValue(SelectedTab!, out Func<TabPage?>? pageAction))
+                SelectedTab = pageAction();
+            else
+                SelectedIndex++;
+
+            if (_pageDisplay.TryGetValue(SelectedTab!, out Action<bool>? pageDisplay))
+                pageDisplay(false);
+
+            UpdateState();
+            OnPageChanged();
+        }
+
+        private void PreviousButtonClicked(object? sender, EventArgs e)
+        {
+            // We might just want to simply return out here instead of selecting a new tab. Test
+            // deeper and determine what the best course of action here is.
+            if (SelectedTab == null)
+                SelectDefaultTab();
+
+            if (_prevPageActions.TryGetValue(SelectedTab!, out Func<TabPage?>? pageAction))
+                SelectedTab = pageAction();
+            else if (SelectedIndex > 0)
+                SelectedIndex--;
+
+            if (_pageDisplay.TryGetValue(SelectedTab!, out Action<bool>? pageDisplay))
+                pageDisplay(true);
+
+            UpdateState();
+            OnPageChanged();
+
+        }
+
+        private void SelectDefaultTab()
+        {
+            if (TabPages.Count < 1)
+                throw new InvalidOperationException("There are no pages in this TabWizardControl.");
+
+            TabPages[0].Select();
+        }
+
+        private void OnPageChanged() => PageChanged?.Invoke(this, new EventArgs());
+
+        private void OnLastButtonClicked() => LastButtonClicked?.Invoke(this, new EventArgs());
+
+        [Category("Buttons")]
+        public Button? NextButton
+        {
+            get
+            {
+                return _nextButton;
+            }
+            set
+            {
+                if (value == null) return;
+
+                _nextButton = value;
+                _nextButtonLabel = _nextButton.Text;
+                _nextButton.Click += NextButtonClicked;
+            }
+        }
+
+        [Category("Buttons")]
+        public Button? PreviousButton
+        {
+            get
+            {
+                return _prevButton;
+            }
+            set
+            {
+                if (value == null) return;
+
+                _prevButton = value;
+                _prevButton.Enabled = false;
+                _prevButton.Click += PreviousButtonClicked;
+            }
+        }
+
+        [DefaultValue("Finish")]
+        [Category("Appearance")]
+        public string LastPageButtonText { get; set; } = "Finish";
+
+        [DefaultValue(true)]
+        [Category("Design")]
+        public bool HideTabs { get; set; } = true;
+
+        [DefaultValue(false)]
+        [Category("Design")]
+        public bool HideTabsInDesigner { get; set; } = false;
+
+        public new TabAlignment Alignment { get; set; } = TabAlignment.Bottom;
+
+        public override string Text { get; set; } = string.Empty; // wth is going on with value nullability here???
+
+        public event EventHandler? PageChanged;
+
+        public event EventHandler? LastButtonClicked;
     }
 }
